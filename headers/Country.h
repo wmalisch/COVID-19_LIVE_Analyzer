@@ -9,26 +9,34 @@ using namespace std;
 class Country
 {
     public:
+        // Basic contructor
         Country();
 
+        // Detailed constructor
         Country(string, string, int , int , int, int, int, int);
 
+        // Destructor
+        ~Country();
+
+        // Mutator functions
         void setName(string name);
-        // void setCode(string str);
-        // void setNCC(int ncc);
-        // void setND(int nd);
-        // void setNRC(int nrc);
-        // void setTCC(int tcc);
-        // void setTD(int td);
-        // void setTRC(int trc);
-        string getName();
-        // string getCode();
-        // int getNCC();
-        // int getND();
-        // int getNRC();
-        // int getTCC();
-        // int getTD();
-        // int getTRC();
+        void setCode(string str);
+        void setNCC(int ncc);
+        void setND(int nd);
+        void setNRC(int nrc);
+        void setTCC(int tcc);
+        void setTD(int td);
+        void setTRC(int trc);
+
+        // Accessor functions
+        string getName() const;
+        string getCode() const;
+        int getNCC() const;
+        int getND() const;
+        int getNRC() const;
+        int getTCC() const;
+        int getTD() const;
+        int getTRC() const;
     protected:
     private:
         string name;
