@@ -27,7 +27,7 @@ class Country
         void setTCC(int tcc);
         void setTD(int td);
         void setTRC(int trc);
-
+        void setKey(int key);
         // Accessor functions
         string getName() const;
         string getCode() const;

@@ -90,3 +90,5 @@ void Country::setTD(int x){
 void Country::setTRC(int x){
     trc = x;
 }
+
+
