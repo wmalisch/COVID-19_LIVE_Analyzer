@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <algorithm>
 #include "../headers/Country.h"
@@ -13,12 +14,7 @@ void writeCountries(const vector<Country>&);
 
 int main(){
     int stat = 0;
-    ifstream file;
-    file.open("summary.csv");
-    if(file.fail()){
-        cerr << "Could NOT find the file" << endl;
-        exit(1);
-    }
+    
     cout << "WELCOME TO THE COVID ANALYZER" << endl 
         << endl 
         << "You have started using the covid assessment tool. If you have not seen an error, then the covid stats have been taken.\n" << endl;
@@ -39,40 +35,57 @@ int main(){
             }
         }
 
-
     vector<Country> world;
-    // Code for parsing file here
-    // Code for parsing file here
-    // Code for parsing file here
     readCountries(world);
 
+    
 
     cout << "\n\n";
     switch(stat){
         case 1:
-        
+            sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getNCC() < rhs.getNCC(); });
+        case 2:
+            sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getND() < rhs.getND(); });
+        case 3:
+            sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getNRC() < rhs.getNRC(); });
+        case 4:
+            sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTCC() < rhs.getTCC(); });
+        case 5:
+            sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTD() < rhs.getTD(); });
+        case 6:
+            sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTRC() < rhs.getTRC(); });
+
     }
     
-    sort(world.begin(), world.end(),[](const Country& lhs, const Country& rhs){ return lhs.getND() < rhs.getND(); });
-    writeCountries(world);
+    //writeCountries(world);
     return 0;
 }
 
 
-void readCountries(vector<Country>& vector){
-    // declar ifstream object
-    // initialize ifstream object
+void readCountries(vector<Country>& vector){    
+    ifstream file;
+    file.open("summary.csv");
+    if(file.fail()){
+        cerr << "Could NOT find the file" << endl;
+        exit(1);
+    }
+    string line;
+    stringstream stream;
+    getline(file,line);
+    getline(file,line);
+    stream << line;
+    char x = stream.get();
+    char y = stream.get();
+    char z = stream.get();
+    cout << x << endl;
+    cout << y << endl;
+    cout << z << endl;
+    
 
-    //for Number of lines in file
-        //add each line as a country to a new record in vector
 
-    Country c = Country("Canada","CN",1,30,3,4,5,6);
-    Country u = Country("USA", "US",9,8,7,6,5,4);
-    Country a = Country("argentina","AG",11,12,13,14,15,16);
-    vector.push_back(c);
-    vector.push_back(u);
-    vector.push_back(a);
-    vector.push_back(*(new Country("chile","CH", 99,88,77,66,55,44)));
+
+
+    // vector.push_back(*(new Country("chile","CH", 99,88,77,66,55,44)));
 }
 
 void writeCountries(const vector<Country>& world){
