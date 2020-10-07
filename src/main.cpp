@@ -8,14 +8,15 @@
 
 using namespace std;
 
-
-void sortCountries(vector<Country>&, int, int);
+// Function declarations
+void sortWriteCountries(vector<Country>&, int, int);
 void readCountries(vector<Country>&);
 
 int main(){
     int stat = 0;
     int sort = 0;
 
+    // Start of program
     cout << "\n\n#########  WELCOME TO THE COVID ANALYZER  ###########" << endl 
         << endl 
         << "You have started using the covid assessment tool.\nIf you have not seen an error, then the covid stats have been taken.\n" << endl;
@@ -54,17 +55,20 @@ int main(){
 
     vector<Country> data;
     readCountries(data);
-    sortCountries(data, stat, sort);
-    // writeCountries(data, sort);
+    sortWriteCountries(data, stat, sort);
     return 0;
 }
 
+// Sort and write the countries. I did this in one function cause I was short on time and had troubles splitting it up
 void sortWriteCountries(vector<Country>& vector, int sta, int sor){
-    Country c;
-    Country x;
-    int val;
+
+    // Depending on what statistic the user wanted to view, switch the the code that asses that statistic
     switch(sta){
+        int val;
+        // New confirmed cases
         case 1:
+
+            // Top 10
             if(sor==1){
                 sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return rhs.getNCC() < lhs.getNCC(); });
                 val = vector[0].getNCC();
@@ -74,43 +78,282 @@ void sortWriteCountries(vector<Country>& vector, int sta, int sor){
                 };
                 cout << string(76,'_') << endl;
                 cout << "New Confirmed Cases; Each # is approx. "<< val << " cases" << endl;
+
+            // Bottom 10
             }else if(sor == 2){
                 sort(vector.begin(), vector.end(),[](const Country& rhs, const Country& lhs){ return rhs.getNCC() < lhs.getNCC(); });
-                for(int i=0;i< 10 ;i++){
-                    cout<<vector[i].getName()<<" New Cases: "<<vector[i].getNCC()<<endl;
-                };
+                val = vector[9].getNCC();
+                
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getNCC(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Confirmed Cases; Each # is approx. "<< 1 << " case" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getNCC() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Confirmed Cases; Each # is approx. "<< val << " cases" << endl;
+                }
+                
             }else{
                 cout << "There was an error" << endl;
             }
-            
-            
+            break;
+        
+        // New deaths
         case 2:
-            sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getND() < rhs.getND(); });
-            val =70;
-            val = val/9;
-            cout << val;
 
+            // Top 10
+            if(sor == 1){
+                sort(vector.begin(), vector.end(),[](const Country& rhs, const Country& lhs){ return lhs.getND() < rhs.getND(); });
+                val = vector[0].getND();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getND(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Deaths; Each # is approx. "<< 1 << " death" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getND() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Deaths; Each # is approx. "<< val << " deaths" << endl;
+                }
+            
+            // Bottom 10
+            }else if(sor == 2){
+                sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getND() < rhs.getND(); });
+                val = vector[0].getND();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getND(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Deaths; Each # is approx. "<< 1 << " death" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getND() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Deaths; Each # is approx. "<< val << " deaths" << endl;
+                }
+            }else{
+                cout << "There was an error" << endl;
+            }
+            break;
+
+        // New recovered cases
         case 3:
-            sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getNRC() < rhs.getNRC(); });
+
+            // Top 10
+            if(sor == 1){
+                sort(vector.begin(), vector.end(),[](const Country& rhs, const Country& lhs){ return lhs.getNRC() < rhs.getNRC(); });
+                val = vector[0].getNRC();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getNRC(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Recovered Cases; Each # is approx. "<< 1 << " recovered case" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getNRC() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Recovered Cases; Each # is approx. "<< val << " recovered cases" << endl;
+                }
+            
+            // Bottom 10
+            }else if(sor == 2){
+                sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getNRC() < rhs.getNRC(); });
+                val = vector[0].getNRC();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getNRC(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Recovered Cases; Each # is approx. "<< 1 << " recovered case" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getNRC() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "New Recovered Cases; Each # is approx. "<< val << " recovered cases" << endl;
+                }
+            }else{
+                cout << "There was an error" << endl;
+            }
+            break;
+
+        // Total confirmed cases
         case 4:
-            sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTCC() < rhs.getTCC(); });
+
+            // Top 10
+            if(sor==1){
+                sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return rhs.getTCC() < lhs.getTCC(); });
+                val = vector[0].getTCC();
+                val = val /70;
+                for(int i=0;i< 10 ;i++){
+                    cout << vector[i].getCode() << "  |  " << string((vector[i].getTCC() / val), '#') << endl;
+                };
+                cout << string(76,'_') << endl;
+                cout << "Total Confirmed Cases; Each # is approx. "<< val << " cases" << endl;
+            
+            // Bottom 10
+            }else if(sor == 2){
+                sort(vector.begin(), vector.end(),[](const Country& rhs, const Country& lhs){ return rhs.getTCC() < lhs.getTCC(); });
+                val = vector[9].getTCC();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getTCC(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Confirmed Cases; Each # is approx. "<< 1 << " case" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getTCC() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Confirmed Cases; Each # is approx. "<< val << " cases" << endl;
+                }
+            }else{
+                cout << "There was an error" << endl;
+            }
+            break;
+        
+        // Total deaths
         case 5:
-            sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTD() < rhs.getTD(); });
+            
+            // Top 10
+            if(sor == 1){
+                sort(vector.begin(), vector.end(),[](const Country& rhs, const Country& lhs){ return lhs.getTD() < rhs.getTD(); });
+                val = vector[0].getTD();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getTD(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Deaths; Each # is approx. "<< 1 << " death" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getTD() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Deaths; Each # is approx. "<< val << " deaths" << endl;
+                }
+
+            // Bottom 10
+            }else if(sor == 2){
+                sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTD() < rhs.getTD(); });
+                val = vector[0].getTD();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getTD(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Deaths; Each # is approx. "<< 1 << " death" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getTD() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Deaths; Each # is approx. "<< val << " deaths" << endl;
+                }
+            }else{
+                cout << "There was an error" << endl;
+            }
+            break;
+        
+        // Total recovered cases
         case 6:
-            sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTRC() < rhs.getTRC(); });
+
+            // Top 10
+            if(sor == 1){
+                sort(vector.begin(), vector.end(),[](const Country& rhs, const Country& lhs){ return lhs.getTRC() < rhs.getTRC(); });
+                val = vector[0].getTRC();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getTRC(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Recovered Cases; Each # is approx. "<< 1 << " recovered case" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getTRC() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Recovered Cases; Each # is approx. "<< val << " recovered cases" << endl;
+                }
+
+            // Bottom 10
+            }else if(sor == 2){
+                sort(vector.begin(), vector.end(),[](const Country& lhs, const Country& rhs){ return lhs.getTRC() < rhs.getTRC(); });
+                val = vector[0].getTRC();
+
+                // If the largest value of the selected 10 is less than 70, set each # to 1 case
+                if(val<70){
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string(vector[i].getTRC(), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Recovered Cases; Each # is approx. "<< 1 << " recovered case" << endl;
+                }else{
+                    val = val / 70;
+                    for(int i=0;i< 10 ;i++){
+                        cout << vector[i].getCode() << "  |  " << string((vector[i].getTRC() / val), '#') << endl;
+                    };
+                    cout << string(76,'_') << endl;
+                    cout << "Total Recovered Cases; Each # is approx. "<< val << " recovered cases" << endl;
+                }
+            }else{
+                cout << "There was an error" << endl;
+            }
+            break;
     }
-
-
 }
 
-
+// Parse the csv and add all the data into a vector
 void readCountries(vector<Country>& vector){    
+
+    // First read the file in. Exit on error
     ifstream file;
     file.open("summary.csv");
     if(file.fail()){
         cerr << "Could NOT find the file" << endl;
         exit(1);
     }
+
+    // While file is not empty, go through each line, and add the items to the vector
     string line;
     getline(file,line);
     while(!(file.eof())){
@@ -158,8 +401,6 @@ void readCountries(vector<Country>& vector){
         converter.clear();
         converter << buff;
         converter >> TRC;
-        vector.push_back(*(new Country(country,code,NCC,ND,NRC,TCC,TD,TRC)));
+        vector.push_back(*(new Country(country,code,NCC,ND,NRC,TCC,TD,TRC))); // Add items to 
     }
-    
-
 }
