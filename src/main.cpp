@@ -70,23 +70,61 @@ void readCountries(vector<Country>& vector){
         exit(1);
     }
     string line;
-    stringstream stream;
     getline(file,line);
-    getline(file,line);
-    stream << line;
-    char x = stream.get();
-    char y = stream.get();
-    char z = stream.get();
-    cout << x << endl;
-    cout << y << endl;
-    cout << z << endl;
+    while(!(file.eof())){
+        string country;
+        string code;
+        string buff;
+        stringstream converter;
+        stringstream stream;
+        int NCC;int ND;int NRC;int TCC;int TD;int TRC;
+
+        getline(file,line); // Retrieve a record of country data
+        stream << line; // Put the record into a stringstream object
+        
+        stream.get(); // Get qoutation mark
+        getline(stream,country,'"');
+        cout << country << endl;
+        stream.get(); // Get quotation mark
+        stream.get(); // Get comma
+        getline(stream,code,'"');
+        cout << code << endl;
+        stream.get(); // Get comma
+        getline(stream,buff,','); // Get time stamp
+        getline(stream,buff,','); // Get NCC
+        converter << buff;
+        converter >> NCC;
+        getline(stream,buff,','); // Get ND
+        converter.clear();
+        converter << buff;
+        converter >> ND;
+        getline(stream,buff,','); // Get NRC
+        converter.clear();
+        converter << buff;
+        converter >> NRC;
+        getline(stream,buff,',');
+        stream.get(); // Get qoutation mark
+        getline(stream,buff,'"'); // Get lower case country
+        stream.get(); // Get comma
+        getline(stream,buff,','); // Get TCC
+        converter.clear();
+        converter << buff;
+        converter >> TCC;
+        getline(stream,buff,','); // Get TD
+        converter.clear();
+        converter << buff;
+        converter >> TD;
+        getline(stream,buff,','); // Get TRC
+        converter.clear();
+        converter << buff;
+        converter >> TRC;
+        vector.push_back(*(new Country(country,code,NCC,ND,NRC,TCC,TD,TRC)));
+    }
     
 
-
-
-
-    // vector.push_back(*(new Country("chile","CH", 99,88,77,66,55,44)));
 }
+
+ 
 
 void writeCountries(const vector<Country>& world){
 
